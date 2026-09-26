@@ -1740,7 +1740,8 @@
 			this.nodeNamesUsed = {}; // Use an THREE.ImageBitmapLoader if imageBitmaps are supported. Moves much of the
 			// expensive work of uploading a texture to the GPU off the main thread.
 
-			if ( typeof createImageBitmap !== 'undefined' && /Firefox/.test( navigator.userAgent ) === false ) {
+			// Route Rush : ImageBitmapLoader passe par fetch(blob:), refusé par la page publiée ; on reste sur TextureLoader (<img>).
+			if ( false ) {
 
 				this.textureLoader = new THREE.ImageBitmapLoader( this.options.manager );
 
