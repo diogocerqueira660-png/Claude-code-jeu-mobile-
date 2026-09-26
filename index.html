@@ -108,6 +108,7 @@
       <div class="swatches" id="swatches"></div>
       <p id="colorName"></p>
       <button class="btn" id="play">JOUER</button>
+      <p class="credit" id="modelStatus"></p>
       <p class="credit" id="credit"></p>
       <p class="hint">Glisse le doigt ou touche gauche / droite pour changer de voie</p>
     </div>
@@ -122,8 +123,8 @@
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
+<script src="vendor/GLTFLoader.js"></script>
+<script src="vendor/RoomEnvironment.js"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -493,23 +494,34 @@
     g.userData.wheels = [];
     return g;
   }
+  // Le modèle est livré dans un .js (base64) : ça marche partout, même en file:// et sur les
+  // hébergeurs qui ne servent pas les .glb.
+  function setModelStatus(def, text) {
+    def.status = text;
+    if (player.def === def) $('modelStatus').textContent = text;
+  }
   function loadModels() {
-    if (!THREE.GLTFLoader) return;
-    const loader = new THREE.GLTFLoader();
     for (const def of PLAYER_CARS.filter(d => d.glb)) {
-      const ready = gltf => { prepareGlb(def, gltf); if (player.def === def) setPlayerCar(); };
-      // 1) le .glb directement ; 2) sinon la copie encodée en .js (hébergeurs qui ne servent pas les .glb)
-      loader.load(def.glb, ready, undefined, () => {
-        const sc = document.createElement('script');
-        sc.src = def.glb + '.js';
-        sc.onload = () => {
+      if (!THREE.GLTFLoader) { setModelStatus(def, 'Modèle 3D indisponible : chargeur absent'); continue; }
+      setModelStatus(def, 'Chargement du modèle 3D…');
+      const fail = why => setModelStatus(def, 'Modèle 3D non chargé : ' + why);
+      const sc = document.createElement('script');
+      sc.src = def.glb + '.js';
+      sc.onerror = () => fail('fichier introuvable');
+      sc.onload = () => {
+        try {
           const b64 = (window.RR_MODELS || {})[def.id];
-          if (!b64) return;
-          const bin = Uint8Array.from(atob(b64), ch => ch.charCodeAt(0));
-          loader.parse(bin.buffer, '', ready, () => {});
-        };
-        document.head.appendChild(sc);
-      });
+          if (!b64) return fail('fichier vide');
+          const str = atob(b64), bin = new Uint8Array(str.length);
+          for (let i = 0; i < str.length; i++) bin[i] = str.charCodeAt(i);
+          delete window.RR_MODELS[def.id];
+          new THREE.GLTFLoader().parse(bin.buffer, '', gltf => {
+            try { prepareGlb(def, gltf); setModelStatus(def, ''); if (player.def === def) setPlayerCar(); }
+            catch (e) { fail(e.message || e); }
+          }, e => fail((e && e.message) || e));
+        } catch (e) { fail(e.message || e); }
+      };
+      document.head.appendChild(sc);
     }
   }
 
@@ -587,6 +599,7 @@
     });
     $('colorName').textContent = def.colors[colorIdx[carIdx]][1];
     $('credit').textContent = def.credit || '';
+    $('modelStatus').textContent = def.status || '';
     $('best').textContent = best ? 'Record : ' + best : '';
   }
   function switchCar(d) {
