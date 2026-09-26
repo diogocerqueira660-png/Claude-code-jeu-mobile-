@@ -21,6 +21,7 @@
     aspect-ratio: 9 / 16; max-width: 100%;
     height: min(100%, calc(100vw * 16 / 9));
     overflow: hidden; background: #9fd3ff;
+    --fs: min(4.2vw, 2.35dvh);
   }
   #wrap canvas { display: block; width: 100%; height: 100%; touch-action: none; }
   .hud {
@@ -28,24 +29,57 @@
     background: rgba(0,0,0,.45); color: #fff; pointer-events: none;
     font-variant-numeric: tabular-nums;
   }
-  .hud small { display: block; font-size: min(3vw, 1.7dvh); font-weight: 600; letter-spacing: 1px; opacity: .85; }
-  .hud b { display: block; font-size: min(6vw, 3.3dvh); }
+  .hud small { display: block; font-size: calc(var(--fs) * .72); font-weight: 600; letter-spacing: 1px; opacity: .85; }
+  .hud b { display: block; font-size: calc(var(--fs) * 1.45); }
   #hudScore { left: 3%; min-width: 34%; }
   #hudSpeed { right: 3%; min-width: 28%; text-align: right; }
   .overlay {
     position: absolute; inset: 0; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 4%;
     background: linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.65)); color: #fff; text-align: center; padding: 8%;
+    font-size: var(--fs);
   }
-  .overlay h1 { font-size: min(11vw, 6dvh); letter-spacing: 2px; text-shadow: 0 4px 0 #e63946; text-wrap: balance; }
-  .overlay p { font-size: min(4.5vw, 2.5dvh); opacity: .92; line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
-  .overlay button {
-    font-size: min(6vw, 3.4dvh); font-weight: 700; padding: .6em 1.6em; border: 0;
-    border-radius: 999px; background: #ffd23f; color: #111; box-shadow: 0 6px 0 #b8901a;
+  .overlay h1 { font-size: calc(var(--fs) * 2.5); letter-spacing: 2px; text-shadow: 0 4px 0 #e63946; text-wrap: balance; line-height: 1.05; }
+  .overlay p { line-height: 1.4; opacity: .92; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+  .btn {
+    font: inherit; font-size: calc(var(--fs) * 1.35); font-weight: 800; padding: .55em 1.6em; border: 0;
+    border-radius: 999px; background: #ffd23f; color: #111; box-shadow: 0 6px 0 #b8901a; cursor: pointer;
   }
-  .overlay button:active { transform: translateY(4px); box-shadow: 0 2px 0 #b8901a; }
-  .overlay button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .btn.alt { background: #fff; box-shadow: 0 6px 0 #9aa0a6; font-size: var(--fs); }
+  .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #b8901a; }
+  button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
   .hidden { display: none !important; }
+
+  /* ---------- Garage ---------- */
+  #menu { justify-content: space-between; padding: 6% 5% 7%; gap: 0;
+    background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,0) 22%, rgba(0,0,0,0) 45%, rgba(0,0,0,.82) 70%); }
+  #menu .top { display: flex; flex-direction: column; gap: .3em; }
+  #menu .top p { font-size: calc(var(--fs) * .85); }
+  .panel { width: 100%; display: flex; flex-direction: column; align-items: center; gap: .75em; }
+  .pick { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: .5em; }
+  .arrow {
+    flex: none; width: 2.4em; height: 2.4em; border-radius: 50%; border: 2px solid rgba(255,255,255,.7);
+    background: rgba(0,0,0,.35); color: #fff; font-size: calc(var(--fs) * 1.2); font-weight: 700; cursor: pointer;
+  }
+  .arrow:active { background: rgba(255,255,255,.25); }
+  .car-name { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
+  .car-name small { font-size: calc(var(--fs) * .8); letter-spacing: 3px; text-transform: uppercase; opacity: .8; }
+  .car-name strong { font-size: calc(var(--fs) * 1.55); text-wrap: balance; }
+  .car-name span { font-size: calc(var(--fs) * .8); color: #ffd23f; font-weight: 700; letter-spacing: 1px; }
+  .specs { font-size: calc(var(--fs) * .85); font-variant-numeric: tabular-nums; }
+  .stats { width: 100%; display: grid; grid-template-columns: auto 1fr; gap: .35em .7em; align-items: center; font-size: calc(var(--fs) * .78); }
+  .stats label { text-align: left; letter-spacing: 1px; text-transform: uppercase; opacity: .85; }
+  .bar { height: .55em; border-radius: 99px; background: rgba(255,255,255,.18); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: #ffd23f; border-radius: 99px; transition: width .35s; }
+  .swatches { display: flex; gap: .7em; justify-content: center; }
+  .sw { width: 2em; height: 2em; border-radius: 50%; border: 3px solid rgba(255,255,255,.35); cursor: pointer; }
+  .sw[aria-pressed="true"] { border-color: #fff; transform: scale(1.12); }
+  #colorName { font-size: calc(var(--fs) * .8); opacity: .85; min-height: 1.4em; }
+  .hint { font-size: calc(var(--fs) * .75); opacity: .75 !important; }
+  .dots { display: flex; gap: .4em; }
+  .dots i { width: .5em; height: .5em; border-radius: 50%; background: rgba(255,255,255,.35); }
+  .dots i.on { background: #ffd23f; }
+  .row { display: flex; gap: .8em; flex-wrap: wrap; justify-content: center; align-items: center; }
 </style>
 </head>
 <body>
@@ -53,15 +87,36 @@
   <div id="hudScore" class="hud hidden"><small>SCORE</small><b id="score">0</b></div>
   <div id="hudSpeed" class="hud hidden"><small>KM/H</small><b id="kmh">0</b></div>
   <div id="menu" class="overlay">
-    <h1>ROUTE RUSH</h1>
-    <p>Esquive le trafic,<br>ramasse les pièces ⭐<br><br>Glisse le doigt ou touche<br>gauche / droite pour tourner</p>
-    <button id="play">JOUER</button>
-    <p id="best"></p>
+    <div class="top">
+      <h1>ROUTE RUSH</h1>
+      <p id="best"></p>
+    </div>
+    <div class="panel">
+      <div class="dots" id="dots"></div>
+      <div class="pick">
+        <button class="arrow" id="prev" aria-label="Voiture précédente">‹</button>
+        <div class="car-name"><small id="brand"></small><strong id="model"></strong><span id="gen"></span></div>
+        <button class="arrow" id="next" aria-label="Voiture suivante">›</button>
+      </div>
+      <p class="specs" id="specs"></p>
+      <div class="stats">
+        <label>Vitesse</label><div class="bar"><i id="stV"></i></div>
+        <label>Accél.</label><div class="bar"><i id="stA"></i></div>
+        <label>Tenue</label><div class="bar"><i id="stH"></i></div>
+      </div>
+      <div class="swatches" id="swatches"></div>
+      <p id="colorName"></p>
+      <button class="btn" id="play">JOUER</button>
+      <p class="hint">Glisse le doigt ou touche gauche / droite pour changer de voie</p>
+    </div>
   </div>
   <div id="over" class="overlay hidden">
     <h1>CRASH !</h1>
     <p id="final"></p>
-    <button id="again">REJOUER</button>
+    <div class="row">
+      <button class="btn" id="again">REJOUER</button>
+      <button class="btn alt" id="garage">GARAGE</button>
+    </div>
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -74,7 +129,7 @@
   const LANES = 4, LANE_W = 3.6, ROAD_W = LANES * LANE_W;
   const laneX = i => (i - (LANES - 1) / 2) * LANE_W;
   const SPAWN_Z = -260, KILL_Z = 25, VIEW_LEN = 420;
-  const TRAFFIC_COLORS = [0xf2f2f2, 0x1b1b1f, 0xb8bcc4, 0x1d3557, 0x5c6470, 0x2a6fdb, 0x2d5a3d, 0x8d1b2c, 0xf4c20d, 0xd9d4c7];
+  const pick = a => a[Math.floor(Math.random() * a.length)];
 
   // ---------- Rendu ----------
   const wrap = $('wrap');
@@ -146,79 +201,245 @@
   strip(.8, curbTex, ROAD_W / 2 + 1, .04);
 
   // ---------- Matériaux partagés ----------
+  const std = (color, o = {}) => new THREE.MeshStandardMaterial(Object.assign({ color }, o));
   const MAT = {
-    glass: new THREE.MeshStandardMaterial({ color: 0x1a2533, metalness: .6, roughness: .15 }),
-    tire: new THREE.MeshStandardMaterial({ color: 0x151515, roughness: .9 }),
-    rim: new THREE.MeshStandardMaterial({ color: 0xcfd3d8, metalness: .8, roughness: .3 }),
-    head: new THREE.MeshStandardMaterial({ color: 0xfff6d0, emissive: 0xfff2b0, emissiveIntensity: .8 }),
-    tail: new THREE.MeshStandardMaterial({ color: 0xff2020, emissive: 0xff0000, emissiveIntensity: .9 }),
-    white: new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .4 }),
-    dark: new THREE.MeshStandardMaterial({ color: 0x222226, roughness: .7 }),
-    cargo: new THREE.MeshStandardMaterial({ color: 0xe9ecef, roughness: .6 }),
+    glass: std(0x16202b, { metalness: .7, roughness: .12 }),
+    tire: std(0x141414, { roughness: .9 }),
+    head: std(0xfff6d0, { emissive: 0xfff2b0, emissiveIntensity: .8 }),
+    tail: std(0xff2020, { emissive: 0xff0000, emissiveIntensity: .9 }),
+    white: std(0xffffff, { roughness: .4 }),
+    black: std(0x111113, { roughness: .6 }),
+    carbon: std(0x1c1d20, { metalness: .5, roughness: .35 }),
+    chrome: std(0xe8eaec, { metalness: 1, roughness: .15 }),
+    plateBlue: std(0x1a3fa3),
+    cargo: std(0xe9ecef, { roughness: .6 }),
     trunk: new THREE.MeshLambertMaterial({ color: 0x6b4a2b }),
     leaf: new THREE.MeshLambertMaterial({ color: 0x2f7d32 }),
     leaf2: new THREE.MeshLambertMaterial({ color: 0x3e9b3a }),
-    pole: new THREE.MeshStandardMaterial({ color: 0x9aa0a6, metalness: .6, roughness: .4 }),
-    coin: new THREE.MeshStandardMaterial({ color: 0xffd23f, emissive: 0x6b4d00, metalness: .8, roughness: .25 }),
+    pole: std(0x9aa0a6, { metalness: .6, roughness: .4 }),
+    coin: std(0xffd23f, { emissive: 0x6b4d00, metalness: .8, roughness: .25 }),
   };
-  const bodyMats = new Map();
-  const bodyMat = c => {
-    if (!bodyMats.has(c)) bodyMats.set(c, new THREE.MeshStandardMaterial({ color: c, metalness: .45, roughness: .35 }));
-    return bodyMats.get(c);
-  };
+  const matCache = new Map();
+  const bodyMat = c => { if (!matCache.has(c)) matCache.set(c, std(c, { metalness: .5, roughness: .32 })); return matCache.get(c); };
+  const rimMat = c => { const k = 'rim' + c; if (!matCache.has(k)) matCache.set(k, std(c, { metalness: .85, roughness: .3 })); return matCache.get(k); };
   const BOX = new THREE.BoxGeometry(1, 1, 1);
-  const WHEEL = new THREE.CylinderGeometry(1, 1, 1, 14); WHEEL.rotateZ(Math.PI / 2);
+  const CYL = new THREE.CylinderGeometry(1, 1, 1, 18); CYL.rotateZ(Math.PI / 2);   // axe = x (roues)
+  const CYLZ = new THREE.CylinderGeometry(1, 1, 1, 14); CYLZ.rotateX(Math.PI / 2); // axe = z (échappements)
+  const TORUS = new THREE.TorusGeometry(1, .16, 8, 20);
 
   function box(group, mat, w, h, l, x, y, z, shadow = true) {
     const m = new THREE.Mesh(BOX, mat);
     m.scale.set(w, h, l); m.position.set(x, y, z);
     m.castShadow = shadow; group.add(m); return m;
   }
+  function mesh(group, geo, mat, sx, sy, sz, x, y, z) {
+    const m = new THREE.Mesh(geo, mat); m.scale.set(sx, sy, sz); m.position.set(x, y, z); group.add(m); return m;
+  }
 
-  // ---------- Véhicules (le nez pointe vers -z) ----------
-  const SPECS = {
-    sport:  { w: 1.9, l: 4.4, h: .62, ch: .48, cl: .42, cz: .06, r: .34 },
-    hatch:  { w: 1.78, l: 3.9, h: .78, ch: .62, cl: .55, cz: .12, r: .32 },
-    sedan:  { w: 1.85, l: 4.7, h: .72, ch: .58, cl: .45, cz: .04, r: .34 },
-    suv:    { w: 2.0, l: 4.8, h: 1.0, ch: .72, cl: .6, cz: .1, r: .42 },
-    pickup: { w: 2.05, l: 5.4, h: .95, ch: .72, cl: .32, cz: -.12, r: .42 },
-    truck:  { w: 2.5, l: 10.5, h: 1.2, ch: 1.0, cl: .2, cz: -.38, r: .5 },
+  // ---------- Carrosseries extrudées depuis un profil latéral ----------
+  // Profil : x = 0 à l'arrière → L à l'avant, y = hauteur. Le nez pointe vers -z.
+  function extrude(pts, width, L, bevel) {
+    const shape = new THREE.Shape(pts.map(([x, y]) => new THREE.Vector2(x, y)));
+    const bt = Math.min(bevel, width * .2);
+    const depth = width - 2 * bt;
+    const g = new THREE.ExtrudeGeometry(shape, {
+      depth, bevelEnabled: true, bevelThickness: bt, bevelSize: bevel, bevelOffset: -bevel, bevelSegments: 2, curveSegments: 4,
+    });
+    g.translate(0, 0, -depth / 2);
+    g.rotateY(Math.PI / 2);
+    g.translate(0, 0, L / 2);
+    return g;
+  }
+  // Profil générique (voitures du trafic) à partir de quelques cotes
+  function profileFrom(p) {
+    const { L, sill, tailH, belt, cr, crt, cft, cf, roof, nose } = p;
+    return {
+      body: [[.06, sill], [0, sill + .12], [0, tailH - .06], [.06, tailH], [cr, belt], [cf, belt - .02],
+             [L - .28, nose], [L - .04, nose - .1], [L, sill + .16], [L - .08, sill]],
+      cabin: [[cr, belt - .03], [crt, roof], [cft, roof], [cf, belt - .05]],
+    };
+  }
+  const roofFrom = c => {
+    const [a, b] = [c[1], c[2]];
+    return [[a[0] + .1, a[1] - .05], [b[0] - .1, b[1] - .05], [b[0] - .1, b[1] + .025], [a[0] + .1, a[1] + .025]];
   };
-  function makeCar(type, color, isPlayer) {
-    const s = SPECS[type], g = new THREE.Group(), bm = bodyMat(color);
-    const by = s.r + s.h / 2 - .05;
-    if (type === 'truck') {
-      box(g, bm, s.w, 2.3, 2.4, 0, s.r + 1.3, -s.l / 2 + 1.2);                 // cabine
-      box(g, MAT.glass, s.w * .92, .8, .1, 0, s.r + 1.9, -s.l / 2 - .02);       // pare-brise
-      box(g, MAT.cargo, s.w + .1, 3.0, s.l - 2.8, 0, s.r + 1.7, 1.3);           // remorque
-      box(g, MAT.dark, s.w * .9, .4, s.l, 0, s.r + .1, 0);                      // châssis
-    } else {
-      box(g, bm, s.w, s.h, s.l, 0, by, 0);
-      const cabZ = s.cz * s.l, cabL = s.l * s.cl;
-      box(g, MAT.glass, s.w * .84, s.ch, cabL, 0, by + s.h / 2 + s.ch / 2, cabZ);
-      box(g, bm, s.w * .8, .07, cabL * .8, 0, by + s.h / 2 + s.ch + .02, cabZ);  // toit
-      if (type === 'pickup') box(g, MAT.dark, s.w * .86, .1, s.l * .36, 0, by + s.h / 2 + .01, s.l * .28, false); // benne
-      if (type === 'sport') box(g, MAT.dark, s.w * .9, .06, .35, 0, by + s.h / 2 + .25, s.l / 2 - .25);           // aileron
+
+  // ---------- Catalogue : voitures du quotidien en France ----------
+  const FR = [0xf1f1ef, 0xf1f1ef, 0xa7abb0, 0x6f7478, 0x16171a, 0x16171a, 0x1c2f55, 0x3a3f46];
+  const TRAFFIC = [
+    { id: 'clio', w: 4, L: 4.06, W: 1.73, r: .31, xr: .72, xf: 3.30, sill: .28, tailH: .98, belt: .96, cr: .14, crt: .42, cft: 2.30, cf: 3.05, roof: 1.44, nose: .80, badge: 'renault', colors: [0xb3161b, 0x1f4d8c, 0xd9651c] },
+    { id: '208', w: 3, L: 4.06, W: 1.75, r: .32, xr: .72, xf: 3.26, sill: .28, tailH: .98, belt: .97, cr: .16, crt: .45, cft: 2.28, cf: 3.05, roof: 1.43, nose: .82, badge: 'peugeot', tlBar: true, colors: [0xe2b100, 0x1c56b8] },
+    { id: 'golf', w: 1, L: 4.28, W: 1.79, r: .33, xr: .75, xf: 3.37, sill: .29, tailH: 1.0, belt: .98, cr: .12, crt: .40, cft: 2.45, cf: 3.20, roof: 1.46, nose: .82, badge: 'vw', colors: [0x2b5d9b] },
+    { id: 'sandero', w: 2, L: 4.09, W: 1.85, r: .33, xr: .70, xf: 3.30, sill: .32, tailH: 1.02, belt: 1.0, cr: .12, crt: .40, cft: 2.30, cf: 3.05, roof: 1.50, nose: .86, badge: 'dacia', colors: [0x8a8f5a, 0x9c1b1f] },
+    { id: 'duster', w: 1, L: 4.34, W: 1.80, r: .37, xr: .78, xf: 3.45, sill: .45, tailH: 1.12, belt: 1.08, cr: .10, crt: .30, cft: 2.65, cf: 3.25, roof: 1.69, nose: 1.0, badge: 'dacia', colors: [0xc9722a, 0x5d6b4a] },
+    { id: '3008', w: 2, L: 4.45, W: 1.84, r: .37, xr: .80, xf: 3.48, sill: .40, tailH: 1.08, belt: 1.06, cr: .14, crt: .42, cft: 2.75, cf: 3.30, roof: 1.62, nose: .95, badge: 'peugeot', colors: [0x2f3a48] },
+    { id: 'gla', w: 1, L: 4.41, W: 1.83, r: .36, xr: .75, xf: 3.48, sill: .38, tailH: 1.06, belt: 1.04, cr: .12, crt: .42, cft: 2.70, cf: 3.25, roof: 1.61, nose: .93, badge: 'merc', colors: [0x9aa3ad] },
+    { id: 'glc', w: 2, L: 4.72, W: 1.89, r: .38, xr: .82, xf: 3.70, sill: .42, tailH: 1.10, belt: 1.08, cr: .14, crt: .45, cft: 2.95, cf: 3.50, roof: 1.64, nose: .98, badge: 'merc', colors: [0x9aa3ad, 0x243447] },
+    { id: 'a3', w: 1, L: 4.34, W: 1.82, r: .33, xr: .80, xf: 3.43, sill: .28, tailH: .98, belt: .97, cr: .15, crt: .50, cft: 2.50, cf: 3.25, roof: 1.43, nose: .80, badge: 'audi', colors: [0x7d8187] },
+    { id: 'a4', w: 2, L: 4.76, W: 1.84, r: .34, xr: .85, xf: 3.67, sill: .28, tailH: 1.0, belt: .98, cr: .08, crt: .28, cft: 2.95, cf: 3.50, roof: 1.43, nose: .80, badge: 'audi', tlBar: true, colors: [0x7d8187, 0x1d2a3f] },
+    { id: 'serie1', w: 1, L: 4.32, W: 1.80, r: .33, xr: .75, xf: 3.42, sill: .28, tailH: .98, belt: .97, cr: .15, crt: .48, cft: 2.50, cf: 3.25, roof: 1.43, nose: .80, badge: 'bmw', colors: [0x2a4f8f] },
+    { id: 'serie3', w: 2, L: 4.71, W: 1.83, r: .34, xr: .82, xf: 3.67, sill: .28, tailH: 1.0, belt: .98, cr: .72, crt: 1.25, cft: 2.95, cf: 3.48, roof: 1.44, nose: .78, badge: 'bmw', colors: [0x2a4f8f, 0x4a4f55] },
+    { id: 'truck', w: 2, truck: true, L: 10.5, W: 2.5, r: .5 },
+  ];
+  const TRAFFIC_POOL = TRAFFIC.flatMap(d => Array(d.w).fill(d));
+
+  // ---------- Voitures du joueur ----------
+  const PLAYER_CARS = [
+    {
+      id: 'm3', brand: 'BMW', model: 'M3 Competition', gen: 'G80',
+      specs: '510 ch · 0-100 en 3,9 s · 290 km/h', stats: [.83, .7, .75],
+      vmax: 290, accel: .55, grip: 1.0,
+      L: 4.79, W: 1.90, r: .36, xr: .85, xf: 3.70, tw: .3, rim: 0x2a2c30, badge: 'bmw',
+      body: [[.05, .26], [0, .42], [0, .78], [.05, .97], [.22, 1.02], [.8, 1.0], [3.45, .97], [3.9, .88], [4.45, .80], [4.72, .72], [4.79, .55], [4.77, .30], [4.6, .22], [.2, .23]],
+      cabin: [[.8, .98], [1.38, 1.39], [2.85, 1.43], [3.45, .95]],
+      tl: [.02, .86], tlW: .46, hl: [4.76, .64], plate: [0, .56], plateF: [4.79, .36],
+      colors: [[0x1e5b3c, 'Vert Isle of Man'], [0x1f4fa8, 'Bleu Portimao'], [0xf2c200, 'Jaune São Paulo'], [0x15161a, 'Noir Saphir']],
+      extras(g, { L, W, Z }) {
+        // double haricot vertical
+        for (const s of [-1, 1]) {
+          box(g, MAT.chrome, .36, .46, .05, s * .2, .47, Z(4.8), false);
+          box(g, MAT.black, .3, .4, .06, s * .2, .47, Z(4.81), false);
+        }
+        box(g, MAT.carbon, W * .82, .05, .22, 0, 1.05, Z(.18));                       // becquet
+        box(g, MAT.carbon, W * .7, .14, .3, 0, .26, Z(.05), false);                     // diffuseur
+        for (const x of [-.62, -.48, .48, .62]) mesh(g, CYLZ, MAT.chrome, .055, .055, .14, x, .38, Z(-.02)); // 4 sorties
+        box(g, MAT.carbon, W * .9, .05, .25, 0, .23, Z(4.72), false);                 // lame avant
+      },
+    },
+    {
+      id: 'gt3rs', brand: 'Porsche', model: '911 GT3 RS', gen: '992',
+      specs: '525 ch · 0-100 en 3,2 s · 296 km/h', stats: [.85, .85, 1],
+      vmax: 296, accel: .68, grip: 1.25,
+      L: 4.57, W: 1.90, r: .35, xr: .98, xf: 3.42, tw: .32, rim: 0x1c1c1e, badge: 'porsche', tlBar: true,
+      body: [[.05, .22], [0, .38], [0, .62], [.04, .84], [.3, .92], [3.0, .92], [3.3, .85], [3.9, .77], [4.3, .69], [4.5, .59], [4.57, .45], [4.55, .28], [4.45, .20], [.2, .20]],
+      cabin: [[.5, .91], [1.75, 1.30], [2.4, 1.31], [3.0, .9]],
+      tl: [.02, .74], tlW: .34, hl: [4.35, .66], plate: [0, .5], plateF: [4.57, .36],
+      colors: [[0xf2f2f2, 'Blanc'], [0x5cb82e, 'Vert Python'], [0xc9ced3, 'Gris Arctique'], [0xc8102e, 'Rouge Indien']],
+      extras(g, { L, W, Z }) {
+        // aileron col de cygne : deux montants qui tiennent l'aile par le dessus
+        const wy = 1.46, wz = Z(.38);
+        for (const s of [-1, 1]) {
+          box(g, MAT.carbon, .05, .56, .12, s * .32, 1.17, Z(.5));
+          box(g, MAT.carbon, .05, .08, .22, s * .32, wy + .06, wz);
+          box(g, MAT.carbon, .04, .3, .62, s * W * .47, wy - .02, wz);                 // dérives
+        }
+        const wing = box(g, MAT.carbon, W * .94, .05, .5, 0, wy, wz); wing.rotation.x = .12;
+        const flap = box(g, MAT.carbon, W * .94, .04, .22, 0, wy + .09, wz + .3); flap.rotation.x = .4;
+        for (const s of [-1, 1]) box(g, MAT.black, .22, .02, .5, s * .28, .73, Z(4.05), false); // ouïes de capot
+        box(g, MAT.carbon, W * .96, .05, .35, 0, .21, Z(4.45), false);               // lame avant
+        box(g, MAT.carbon, W * .8, .16, .3, 0, .26, Z(.05), false);                   // diffuseur
+        for (const x of [-.09, .09]) mesh(g, CYLZ, MAT.chrome, .065, .065, .14, x, .42, Z(-.03));
+        for (const s of [-1, 1]) box(g, MAT.black, .03, .12, .5, s * (W / 2 + .005), .78, Z(3.7), false); // ouïes d'ailes
+      },
+    },
+    {
+      id: 'laferrari', brand: 'Ferrari', model: 'LaFerrari', gen: 'F150',
+      specs: '963 ch · 0-100 en moins de 3 s · 350+ km/h', stats: [1, 1, .7],
+      vmax: 350, accel: .82, grip: .9,
+      L: 4.70, W: 1.99, r: .36, xr: .95, xf: 3.60, tw: .33, rim: 0xb9bdc2, badge: 'ferrari', cw: .66,
+      body: [[.05, .2], [0, .35], [0, .72], [.08, .84], [.4, .87], [1.05, .83], [3.2, .78], [3.5, .67], [4.1, .56], [4.55, .45], [4.70, .32], [4.62, .16], [.2, .14]],
+      cabin: [[1.02, .82], [1.72, 1.12], [2.42, 1.13], [3.22, .76]],
+      tl: [.03, .74], tlW: .3, hl: [4.45, .48], plate: [0, .46], plateF: [4.7, .28],
+      colors: [[0xd40000, 'Rosso Corsa'], [0xf6c700, 'Giallo Modena'], [0x121212, 'Nero Daytona'], [0xf0f0ec, 'Bianco Avus']],
+      extras(g, { L, W, Z }) {
+        box(g, MAT.glass, W * .5, .05, .62, 0, .87, Z(.72), false);                 // capot moteur vitré
+        box(g, MAT.carbon, W * .88, .07, .2, 0, .88, Z(.14));                        // aileron actif
+        box(g, MAT.carbon, W * .84, .2, .45, 0, .22, Z(.15), false);                 // grand diffuseur
+        for (let i = -2; i <= 2; i++) box(g, MAT.carbon, .03, .22, .45, i * .28, .24, Z(.1), false);
+        for (const s of [-1, 1]) {
+          box(g, MAT.black, .04, .24, .7, s * (W / 2 + .005), .5, Z(1.6), false);    // prises d'air latérales
+          box(g, MAT.carbon, .06, .08, 3.2, s * (W / 2 - .02), .18, 0, false);       // bas de caisse noir
+        }
+        box(g, MAT.black, W * .55, .12, .06, 0, .32, Z(4.71), false);                // bouche avant
+        for (const x of [-.12, .12]) mesh(g, CYLZ, MAT.chrome, .06, .06, .14, x, .6, Z(-.03));
+      },
+    },
+  ];
+
+  // ---------- Construction d'un véhicule ----------
+  const geoCache = new Map();
+  function carGeo(def) {
+    if (!geoCache.has(def.id)) {
+      const pr = def.body ? def : profileFrom(def);
+      const cw = def.W * (def.cw || .8);
+      geoCache.set(def.id, {
+        body: extrude(pr.body, def.W, def.L, .06),
+        cabin: extrude(pr.cabin, cw, def.L, .09),
+        roof: extrude(roofFrom(pr.cabin), cw + .02, def.L, .02),
+        pr,
+      });
     }
-    if (isPlayer) { // bandes de course
-      box(g, MAT.white, .22, .02, s.l * 1.001, -.2, by + s.h / 2 + .005, 0, false);
-      box(g, MAT.white, .22, .02, s.l * 1.001, .2, by + s.h / 2 + .005, 0, false);
+    return geoCache.get(def.id);
+  }
+
+  function badge(g, kind, y, z) {
+    if (kind === 'audi') { for (let i = 0; i < 4; i++) mesh(g, TORUS, MAT.chrome, .07, .07, .07, (i - 1.5) * .1, y, z); }
+    else if (kind === 'renault') { const m = box(g, MAT.chrome, .12, .12, .03, 0, y, z, false); m.rotation.z = Math.PI / 4; }
+    else if (kind === 'bmw') { mesh(g, CYLZ, MAT.chrome, .07, .07, .03, 0, y, z); mesh(g, CYLZ, bodyMat(0x1a5fb4), .05, .05, .035, 0, y, z); }
+    else if (kind === 'porsche') { box(g, MAT.chrome, .5, .05, .03, 0, y, z, false); }
+    else if (kind === 'ferrari') { box(g, bodyMat(0xf6c700), .07, .09, .03, 0, y, z, false); }
+    else mesh(g, CYLZ, MAT.chrome, .08, .08, .03, 0, y, z);
+  }
+
+  function makeTruck(color) {
+    const g = new THREE.Group(), L = 10.5, W = 2.5, r = .5, bm = bodyMat(color);
+    box(g, bm, W, 2.3, 2.4, 0, r + 1.3, -L / 2 + 1.2);
+    box(g, MAT.glass, W * .92, .8, .1, 0, r + 1.9, -L / 2 - .02);
+    box(g, MAT.cargo, W + .1, 3.0, L - 2.8, 0, r + 1.7, 1.3);
+    box(g, MAT.black, W * .9, .4, L, 0, r + .1, 0);
+    for (const s of [-1, 1]) {
+      box(g, MAT.tail, .3, .14, .06, s * (W / 2 - .25), r + .5, L / 2 + .02, false);
+      box(g, MAT.head, .3, .14, .06, s * (W / 2 - .3), r + .6, -L / 2 - .02, false);
     }
-    // phares et feux
-    for (const sx of [-1, 1]) {
-      box(g, MAT.head, .38, .14, .06, sx * (s.w / 2 - .3), by + s.h * .15, -s.l / 2 - .02, false);
-      box(g, MAT.tail, .42, .14, .06, sx * (s.w / 2 - .3), type === 'truck' ? s.r + .5 : by + s.h * .2, s.l / 2 + .02, false);
+    box(g, MAT.white, .52, .11, .02, 0, r + .3, L / 2 + .02, false);
+    g.userData.wheels = [];
+    for (const z of [-L / 2 + 1.3, L / 2 - 2.6, L / 2 - 1.2]) for (const s of [-1, 1]) {
+      const w = new THREE.Group(); w.position.set(s * (W / 2 - .15), r, z);
+      mesh(w, CYL, MAT.tire, .3, r, r, 0, 0, 0).castShadow = true;
+      mesh(w, CYL, rimMat(0xcfd3d8), .32, r * .55, r * .55, 0, 0, 0);
+      g.add(w); g.userData.wheels.push(w);
     }
+    return g;
+  }
+
+  function makeCar(def, color) {
+    if (def.truck) return makeTruck(color);
+    const g = new THREE.Group(), bm = bodyMat(color), G = carGeo(def), { L, W, r } = def;
+    const Z = x => L / 2 - x;
+    const add = (geo, mat) => { const m = new THREE.Mesh(geo, mat); m.castShadow = true; g.add(m); return m; };
+    add(G.body, bm); add(G.cabin, MAT.glass); add(G.roof, bm);
+    const p = G.pr.body ? def : def; // cotes pour les feux
+    const tl = def.tl || [0, def.tailH - .15];
+    const hl = def.hl || [L, def.nose - .2];
+    const pl = def.plate || [0, def.sill + .3];
+    const plF = def.plateF || [L, def.sill + .24];
+    const tlW = def.tlW || .36;
+    for (const s of [-1, 1]) {
+      box(g, MAT.tail, tlW, .12, .06, s * (W / 2 - tlW / 2 - .06), tl[1], Z(tl[0]) + .02, false);
+      box(g, MAT.head, .36, .1, .06, s * (W / 2 - .3), hl[1], Z(hl[0]) - .02, false);
+      // rétroviseurs
+      const cab = G.pr.cabin[3];
+      box(g, bm, .16, .1, .18, s * (W / 2 + .06), cab[1] + .12, Z(cab[0] - .12));
+    }
+    if (def.tlBar) box(g, MAT.tail, W * .8, .04, .05, 0, tl[1] + .05, Z(tl[0]) + .02, false);
+    // plaques françaises (blanches, bande bleue à gauche)
+    for (const [pp, dir] of [[pl, 1], [plF, -1]]) {
+      const z = Z(pp[0]) + dir * .025;
+      box(g, MAT.white, .52, .11, .02, 0, pp[1], z, false);
+      box(g, MAT.plateBlue, .05, .11, .025, -.235, pp[1], z, false);
+      box(g, MAT.plateBlue, .05, .11, .025, .235, pp[1], z, false);
+    }
+    badge(g, def.badge, pl[1] + .2, Z(0) + .04);
     // roues
     g.userData.wheels = [];
-    const axles = type === 'truck' ? [-s.l / 2 + 1.3, s.l / 2 - 2.6, s.l / 2 - 1.2] : [-s.l * .31, s.l * .31];
-    for (const z of axles) for (const sx of [-1, 1]) {
-      const wgrp = new THREE.Group(); wgrp.position.set(sx * (s.w / 2 - .12), s.r, z);
-      const t = new THREE.Mesh(WHEEL, MAT.tire); t.scale.set(.28, s.r, s.r); t.castShadow = true;
-      const rim = new THREE.Mesh(WHEEL, MAT.rim); rim.scale.set(.3, s.r * .55, s.r * .55);
-      wgrp.add(t, rim); g.add(wgrp); g.userData.wheels.push(wgrp);
+    const tw = def.tw || .24;
+    for (const x of [def.xr, def.xf]) for (const s of [-1, 1]) {
+      const w = new THREE.Group(); w.position.set(s * (W / 2 - tw / 2 + .02), r, Z(x));
+      mesh(w, CYL, MAT.tire, tw, r, r, 0, 0, 0).castShadow = true;
+      mesh(w, CYL, rimMat(def.rim || 0xc3c7cc), tw + .02, r * .62, r * .62, 0, 0, 0);
+      g.add(w); g.userData.wheels.push(w);
     }
-    g.userData.spec = s;
+    if (def.extras) def.extras(g, { L, W, Z });
     return g;
   }
 
@@ -240,7 +461,7 @@
   function makeBuilding() {
     const g = new THREE.Group(), h = 8 + Math.random() * 22, w = 8 + Math.random() * 8;
     const cols = [0xd8cfc4, 0xb7c4cf, 0xe5d5b5, 0xa9b3a0, 0xcdb8b0];
-    box(g, new THREE.MeshLambertMaterial({ color: cols[Math.floor(Math.random() * cols.length)] }), w, h, w, 0, h / 2, 0);
+    box(g, new THREE.MeshLambertMaterial({ color: pick(cols) }), w, h, w, 0, h / 2, 0);
     for (let y = 2.5; y < h - 1; y += 3) box(g, MAT.glass, w + .05, 1.1, w * .8, 0, y, 0, false);
     return g;
   }
@@ -254,25 +475,67 @@
   for (let z = KILL_Z; z > KILL_Z - DECOR_SPAN; z -= 40) for (const side of [-1, 1]) addProp(makeLamp(side), side * (ROAD_W / 2 + 2.2), z);
   for (let z = KILL_Z; z > KILL_Z - DECOR_SPAN; z -= 26) for (const side of [-1, 1]) addProp(makeBuilding(), side * (ROAD_W / 2 + 34 + Math.random() * 20), z);
 
-  // ---------- État du jeu ----------
-  let state = 'menu', player, enemies = [], coins = [], parts = [], speed, dist, score, coinCount, spawnT, coinT, shake = 0, time = 0, last;
-  let best = +(lsGet('rr_best') || 0);
-  $('best').textContent = best ? 'Record : ' + best : '';
+  // ---------- Sauvegarde locale ----------
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
-  player = { mesh: makeCar('sport', 0xe63946, true), x: 0, tx: 0, vx: 0, spin: 0 };
-  scene.add(player.mesh);
-  const cam = { pos: new THREE.Vector3(0, 6, 11), look: new THREE.Vector3(0, 1, -12) };
+  // ---------- État du jeu ----------
+  let state = 'menu', enemies = [], coins = [], parts = [], speed = 10, dist = 0, score = 0, coinCount = 0,
+      spawnT = 0, coinT = 0, shake = 0, time = 0, last, menuAngle = 0;
+  let best = +(lsGet('rr_best') || 0);
+  let carIdx = Math.max(0, PLAYER_CARS.findIndex(c => c.id === lsGet('rr_car')));
+  let colorIdx = PLAYER_CARS.map((c, i) => +(lsGet('rr_color_' + c.id) || 0));
+
+  const player = { mesh: null, def: null, x: 0, tx: 0, vx: 0, spin: 0 };
+  function setPlayerCar() {
+    if (player.mesh) scene.remove(player.mesh);
+    const def = PLAYER_CARS[carIdx];
+    player.def = def;
+    player.mesh = makeCar(def, def.colors[colorIdx[carIdx]][0]);
+    player.mesh.position.x = player.x;
+    scene.add(player.mesh);
+  }
+
+  // ---------- Garage (menu) ----------
+  function renderGarage() {
+    const def = PLAYER_CARS[carIdx];
+    $('brand').textContent = def.brand;
+    $('model').textContent = def.model;
+    $('gen').textContent = def.gen;
+    $('specs').textContent = def.specs;
+    $('stV').style.width = def.stats[0] * 100 + '%';
+    $('stA').style.width = def.stats[1] * 100 + '%';
+    $('stH').style.width = def.stats[2] * 100 + '%';
+    $('dots').innerHTML = PLAYER_CARS.map((_, i) => `<i class="${i === carIdx ? 'on' : ''}"></i>`).join('');
+    const sw = $('swatches'); sw.innerHTML = '';
+    def.colors.forEach(([c, name], i) => {
+      const b = document.createElement('button');
+      b.className = 'sw'; b.style.background = '#' + c.toString(16).padStart(6, '0');
+      b.setAttribute('aria-label', name); b.setAttribute('aria-pressed', i === colorIdx[carIdx]);
+      b.onclick = () => { colorIdx[carIdx] = i; lsSet('rr_color_' + def.id, i); setPlayerCar(); renderGarage(); };
+      sw.appendChild(b);
+    });
+    $('colorName').textContent = def.colors[colorIdx[carIdx]][1];
+    $('best').textContent = best ? 'Record : ' + best : '';
+  }
+  function switchCar(d) {
+    carIdx = (carIdx + d + PLAYER_CARS.length) % PLAYER_CARS.length;
+    lsSet('rr_car', PLAYER_CARS[carIdx].id);
+    setPlayerCar(); renderGarage();
+  }
+  $('prev').onclick = () => switchCar(-1);
+  $('next').onclick = () => switchCar(1);
+  setPlayerCar(); renderGarage();
+
+  const cam = { pos: new THREE.Vector3(6, 4, 8), look: new THREE.Vector3(0, 0, 0) };
 
   function clearList(list) { for (const o of list) scene.remove(o.mesh); list.length = 0; }
   function reset() {
     clearList(enemies); clearList(coins); clearList(parts);
     player.x = player.tx = player.vx = 0; player.spin = 0;
     player.mesh.rotation.set(0, 0, 0); player.mesh.position.set(0, 0, 0);
-    speed = 25; dist = 0; score = 0; coinCount = 0; spawnT = .5; coinT = 1.5; shake = 0;
+    speed = 30; dist = 0; score = 0; coinCount = 0; spawnT = .5; coinT = 1.5; shake = 0;
   }
-  reset(); speed = 14;
 
   // ---------- Contrôles ----------
   const input = { left: false, right: false };
@@ -297,6 +560,8 @@
   window.addEventListener('pointercancel', endTouch);
   const isL = k => k === 'ArrowLeft' || k === 'q' || k === 'a', isR = k => k === 'ArrowRight' || k === 'd';
   window.addEventListener('keydown', e => {
+    if (state === 'menu' && isL(e.key)) return switchCar(-1);
+    if (state === 'menu' && isR(e.key)) return switchCar(1);
     if (isL(e.key)) input.left = true;
     if (isR(e.key)) input.right = true;
     if ((e.key === ' ' || e.key === 'Enter') && state !== 'play') start();
@@ -304,14 +569,21 @@
   window.addEventListener('keyup', e => { if (isL(e.key)) input.left = false; if (isR(e.key)) input.right = false; });
   $('play').onclick = start;
   $('again').onclick = start;
+  $('garage').onclick = toGarage;
 
   const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+  const showHud = on => ['hudScore', 'hudSpeed'].forEach(id => $(id).classList.toggle('hidden', !on));
 
   function start() {
     reset(); state = 'play';
+    for (let z = -70; z > SPAWN_Z; z -= 45) spawnEnemy(z); // du trafic dès le départ
     $('menu').classList.add('hidden'); $('over').classList.add('hidden');
-    $('hudScore').classList.remove('hidden'); $('hudSpeed').classList.remove('hidden');
-    buzz(20);
+    showHud(true); buzz(20);
+  }
+  function toGarage() {
+    reset(); speed = 10; state = 'menu';
+    $('over').classList.add('hidden'); $('menu').classList.remove('hidden');
+    showHud(false); renderGarage();
   }
 
   function burst(x, y, z, n, colors, force) {
@@ -325,30 +597,29 @@
 
   function gameOver() {
     state = 'over'; shake = 1; player.spin = (Math.random() < .5 ? -1 : 1) * 9;
-    burst(player.x, 1, -1, 30, [0xffd23f, 0xe63946, 0x333333], 14);
+    burst(player.x, 1, -1, 30, [0xffd23f, player.def.colors[colorIdx[carIdx]][0], 0x333333], 14);
     buzz([80, 40, 120]);
     if (score > best) { best = score; lsSet('rr_best', best); }
     setTimeout(() => {
-      $('final').innerHTML = 'Score : <b>' + score + '</b><br>Distance : ' + (dist / 1000).toFixed(2) + ' km<br>Record : ' + best;
+      if (state !== 'over') return;
+      $('final').innerHTML = `${player.def.brand} ${player.def.model}<br>Score : <b>${score}</b><br>Distance : ${(dist / 1000).toFixed(2)} km<br>Record : ${best}`;
       $('over').classList.remove('hidden');
-      $('best').textContent = 'Record : ' + best;
     }, 900);
   }
 
   // ---------- Trafic & pièces ----------
-  const TYPES = ['hatch', 'hatch', 'sedan', 'sedan', 'suv', 'suv', 'pickup', 'sport', 'truck'];
-  function spawnEnemy() {
+  function spawnEnemy(z = SPAWN_Z) {
     const lane = Math.floor(Math.random() * LANES);
-    if (enemies.some(en => en.lane === lane && en.mesh.position.z < SPAWN_Z + 40)) return;
-    const busy = new Set(enemies.filter(en => en.mesh.position.z < SPAWN_Z + 70).map(en => en.lane));
+    if (enemies.some(en => en.lane === lane && Math.abs(en.mesh.position.z - z) < 40)) return;
+    const busy = new Set(enemies.filter(en => Math.abs(en.mesh.position.z - z) < 70).map(en => en.lane));
     if (busy.size >= LANES - 1 && !busy.has(lane)) return; // toujours une voie libre
-    const type = TYPES[Math.floor(Math.random() * TYPES.length)];
-    const color = type === 'truck' ? [0x1d3557, 0xc1121f, 0xf4f4f4, 0x2d6a4f][Math.floor(Math.random() * 4)]
-                                   : TRAFFIC_COLORS[Math.floor(Math.random() * TRAFFIC_COLORS.length)];
-    const mesh = makeCar(type, color, false);
-    mesh.position.set(laneX(lane), 0, SPAWN_Z);
+    const def = pick(TRAFFIC_POOL);
+    const color = def.truck ? pick([0x1d3557, 0xc1121f, 0xf4f4f4, 0x2d6a4f])
+                            : (Math.random() < .7 ? pick(FR) : pick(def.colors));
+    const mesh = makeCar(def, color);
+    mesh.position.set(laneX(lane), 0, z);
     scene.add(mesh);
-    enemies.push({ mesh, lane, v: type === 'truck' ? 13 + Math.random() * 4 : 15 + Math.random() * 12, spec: SPECS[type] });
+    enemies.push({ mesh, lane, def, v: def.truck ? 10 + Math.random() * 4 : 11 + Math.random() * 10 });
   }
   const COIN_GEO = new THREE.CylinderGeometry(.6, .6, .14, 22); COIN_GEO.rotateX(Math.PI / 2);
   function spawnCoin() {
@@ -361,9 +632,9 @@
   }
 
   // ---------- Boucle ----------
-  const PSPEC = SPECS.sport;
   function update(dt) {
     time += dt;
+    const P = player.def;
     for (const p of parts) {
       p.v.y -= 25 * dt; p.mesh.position.addScaledVector(p.v, dt);
       if (p.mesh.position.y < .1) { p.mesh.position.y = .1; p.v.y *= -.4; p.v.x *= .8; p.v.z *= .8; }
@@ -375,10 +646,10 @@
     shake = Math.max(0, shake - dt * 1.5);
 
     if (state === 'play') {
-      speed = Math.min(72, speed + .55 * dt);
+      speed = Math.min(P.vmax / 3.6, speed + P.accel * dt);
       dist += speed * dt;
       score = Math.floor(dist / 10) + coinCount * 25;
-      const steer = 13 + speed * .12;
+      const steer = (13 + speed * .12) * P.grip;
       if (input.left) player.tx = clampX(player.tx - steer * dt);
       if (input.right) player.tx = clampX(player.tx + steer * dt);
     } else if (state === 'over') {
@@ -392,28 +663,28 @@
 
     // joueur
     const prevX = player.x;
-    player.x += (player.tx - player.x) * Math.min(1, dt * 9);
+    player.x += (player.tx - player.x) * Math.min(1, dt * 9 * P.grip);
     player.vx = (player.x - prevX) / Math.max(dt, 1e-4);
     const pm = player.mesh;
     pm.position.x = player.x;
     if (state === 'over') { pm.rotation.y += player.spin * dt; player.spin *= 1 - dt * 1.5; }
     else { pm.rotation.y = -player.vx * .035; pm.rotation.z = -player.vx * .012; }
-    for (const w of pm.userData.wheels) w.rotation.x -= dz / PSPEC.r;
+    for (const w of pm.userData.wheels) w.rotation.x -= dz / P.r;
 
     // trafic
     if (state === 'play') {
       spawnT -= dt;
-      if (spawnT <= 0) { spawnEnemy(); spawnT = Math.max(.3, 1.2 - speed / 90) * (.6 + Math.random() * .7); }
+      if (spawnT <= 0) { spawnEnemy(); spawnT = Math.max(.28, 1.2 - speed / 90) * (.6 + Math.random() * .7); }
       coinT -= dt;
       if (coinT <= 0) { spawnCoin(); coinT = 2 + Math.random() * 2; }
     }
     for (const en of enemies) {
       const m = en.mesh;
       m.position.z += (speed - en.v) * dt;
-      for (const w of m.userData.wheels) w.rotation.x -= en.v * dt / en.spec.r;
+      for (const w of m.userData.wheels) w.rotation.x -= en.v * dt / en.def.r;
       if (state === 'play' &&
-          Math.abs(m.position.x - player.x) < (en.spec.w + PSPEC.w) / 2 * .88 &&
-          Math.abs(m.position.z) < (en.spec.l + PSPEC.l) / 2 * .9) gameOver();
+          Math.abs(m.position.x - player.x) < (en.def.W + P.W) / 2 * .88 &&
+          Math.abs(m.position.z) < (en.def.L + P.L) / 2 * .9) gameOver();
     }
     for (const en of enemies) if (en.mesh.position.z > KILL_Z) scene.remove(en.mesh);
     enemies = enemies.filter(en => en.mesh.position.z <= KILL_Z);
@@ -432,17 +703,19 @@
     // ---------- Caméra drone ----------
     let want, look;
     if (state === 'menu') { // le drone tourne autour de la voiture
-      const a = time * .35;
-      want = new THREE.Vector3(Math.sin(a) * 9, 4.5 + Math.sin(time * .8) * .6, Math.cos(a) * 9);
-      look = new THREE.Vector3(0, .8, 0);
+      menuAngle += dt * .3;
+      want = new THREE.Vector3(Math.sin(menuAngle) * 10.5, 4.4 + Math.sin(time * .8) * .3, Math.cos(menuAngle) * 10.5);
+      look = new THREE.Vector3(0, -2.3, 0);
+      camera.fov += (50 - camera.fov) * Math.min(1, dt * 2);
+      camera.updateProjectionMatrix();
     } else {
-      const k = (speed - 25) / 47; // 0 → 1 avec la vitesse
+      const k = Math.max(0, (speed - 30) / 60);
       want = new THREE.Vector3(player.x * .75, 7 + k * 1.4 + Math.sin(time * 1.3) * .25, 10.5 + k * 2.5);
       look = new THREE.Vector3(player.x * .9, .9, -14);
-      camera.fov += ((58 + Math.max(0, k) * 14) - camera.fov) * Math.min(1, dt * 2);
+      camera.fov += ((58 + k * 16) - camera.fov) * Math.min(1, dt * 2);
       camera.updateProjectionMatrix();
     }
-    const lag = state === 'menu' ? 1.2 : 3.2;
+    const lag = state === 'menu' ? 1.5 : 3.2;
     cam.pos.lerp(want, Math.min(1, dt * lag));
     cam.look.lerp(look, Math.min(1, dt * lag * 1.5));
     camera.position.copy(cam.pos);
