@@ -295,21 +295,23 @@
   // ---------- Voitures du joueur ----------
   const PLAYER_CARS = [
     {
-      id: 'm3', brand: 'BMW', model: 'M3 Competition', gen: 'G80',
-      specs: '510 ch · 0-100 en 3,9 s · 290 km/h', stats: [.83, .7, .75],
-      vmax: 290, accel: .55, grip: 1.0,
-      L: 4.79, W: 1.90, r: .36, xr: .85, xf: 3.70, tw: .3, rim: 0x2a2c30, badge: 'bmw',
+      id: 'm3t', brand: 'BMW', model: 'M3 Competition Touring', gen: 'G81',
+      specs: '510 ch · 0-100 en 3,6 s · 280 km/h', stats: [.86, .72, .72],
+      vmax: 280, accel: .55, grip: 1.0,
+      glb: 'models/m3t.glb', glbFlip: true, paint: /Paint_Material/,
+      credit: 'Modèle 3D « 2023 BMW M3 Touring » par Ddiaz Design (Sketchfab), licence CC BY-NC-SA 4.0',
+      L: 4.80, W: 1.90, r: .36, xr: .85, xf: 3.70, tw: .3, rim: 0x2a2c30, badge: 'bmw',
       body: [[.05, .26], [0, .42], [0, .78], [.05, .97], [.22, 1.02], [.8, 1.0], [3.45, .97], [3.9, .88], [4.45, .80], [4.72, .72], [4.79, .55], [4.77, .30], [4.6, .22], [.2, .23]],
-      cabin: [[.8, .98], [1.38, 1.39], [2.85, 1.43], [3.45, .95]],
+      cabin: [[.1, .98], [.4, 1.44], [2.85, 1.45], [3.45, .95]],
       tl: [.02, .86], tlW: .46, hl: [4.76, .64], plate: [0, .56], plateF: [4.79, .36],
-      colors: [[0x1e5b3c, 'Vert Isle of Man'], [0x1f4fa8, 'Bleu Portimao'], [0xf2c200, 'Jaune São Paulo'], [0x15161a, 'Noir Saphir']],
+      colors: [[0x1e5b3c, 'Vert Isle of Man'], [0x1f4fa8, 'Bleu Portimao'], [0x8a9199, 'Gris Brooklyn'], [0x15161a, 'Noir Saphir']],
       extras(g, { L, W, Z }) {
         // double haricot vertical
         for (const s of [-1, 1]) {
           box(g, MAT.chrome, .36, .46, .05, s * .2, .47, Z(4.8), false);
           box(g, MAT.black, .3, .4, .06, s * .2, .47, Z(4.81), false);
         }
-        box(g, MAT.carbon, W * .82, .05, .22, 0, 1.05, Z(.18));                       // becquet
+        box(g, MAT.carbon, W * .72, .05, .3, 0, 1.47, Z(.35));                        // becquet de pavillon
         box(g, MAT.carbon, W * .7, .14, .3, 0, .26, Z(.05), false);                     // diffuseur
         for (const x of [-.62, -.48, .48, .62]) mesh(g, CYLZ, MAT.chrome, .055, .055, .14, x, .38, Z(-.02)); // 4 sorties
         box(g, MAT.carbon, W * .9, .05, .25, 0, .23, Z(4.72), false);                 // lame avant
@@ -344,24 +346,38 @@
       },
     },
     {
-      id: 'laferrari', brand: 'Ferrari', model: 'LaFerrari', gen: 'F150',
-      specs: '963 ch · 0-100 en moins de 3 s · 350+ km/h', stats: [1, 1, .7],
-      vmax: 350, accel: .82, grip: .9,
-      L: 4.70, W: 1.99, r: .36, xr: .95, xf: 3.60, tw: .33, rim: 0xb9bdc2, badge: 'ferrari', cw: .66,
+      id: 'f40', brand: 'Ferrari', model: 'F40 LB-Works', gen: 'Liberty Walk',
+      specs: '478 ch · 0-100 en 4,1 s · 324 km/h', stats: [1, .62, .65],
+      vmax: 324, accel: .5, grip: .9,
+      glb: 'models/f40.glb', glbFlip: true, paint: /^Paint$/,
+      credit: 'Modèle 3D « LB-Works Ferrari F40 » (Sketchfab, modèle gratuit)',
+      L: 4.36, W: 2.05, r: .34, xr: .85, xf: 3.3, tw: .34, rim: 0xb9bdc2, badge: 'ferrari', cw: .66,
+      colors: [[0xd40000, 'Rosso Corsa'], [0xf6c700, 'Giallo Modena'], [0x121212, 'Nero'], [0xf0f0ec, 'Bianco']],
       body: [[.05, .2], [0, .35], [0, .72], [.08, .84], [.4, .87], [1.05, .83], [3.2, .78], [3.5, .67], [4.1, .56], [4.55, .45], [4.70, .32], [4.62, .16], [.2, .14]],
       cabin: [[1.02, .82], [1.72, 1.12], [2.42, 1.13], [3.22, .76]],
       tl: [.03, .74], tlW: .3, hl: [4.45, .48], plate: [0, .46], plateF: [4.7, .28],
-      colors: [[0xd40000, 'Rosso Corsa'], [0xf6c700, 'Giallo Modena'], [0x121212, 'Nero Daytona'], [0xf0f0ec, 'Bianco Avus']],
       extras(g, { L, W, Z }) {
-        box(g, MAT.glass, W * .5, .05, .62, 0, .87, Z(.72), false);                 // capot moteur vitré
-        box(g, MAT.carbon, W * .88, .07, .2, 0, .88, Z(.14));                        // aileron actif
-        box(g, MAT.carbon, W * .84, .2, .45, 0, .22, Z(.15), false);                 // grand diffuseur
-        for (let i = -2; i <= 2; i++) box(g, MAT.carbon, .03, .22, .45, i * .28, .24, Z(.1), false);
-        for (const s of [-1, 1]) {
-          box(g, MAT.black, .04, .24, .7, s * (W / 2 + .005), .5, Z(1.6), false);    // prises d'air latérales
-          box(g, MAT.carbon, .06, .08, 3.2, s * (W / 2 - .02), .18, 0, false);       // bas de caisse noir
-        }
-        box(g, MAT.black, W * .55, .12, .06, 0, .32, Z(4.71), false);                // bouche avant
+        box(g, MAT.carbon, W * .88, .07, .2, 0, .88, Z(.14));                        // aileron
+        box(g, MAT.carbon, W * .84, .2, .45, 0, .22, Z(.15), false);                 // diffuseur
+        for (const s of [-1, 1]) box(g, MAT.black, .04, .24, .7, s * (W / 2 + .005), .5, Z(1.6), false); // prises d'air
+        for (const x of [-.12, .12]) mesh(g, CYLZ, MAT.chrome, .06, .06, .14, x, .6, Z(-.03));
+      },
+    },
+    {
+      id: 'sf90xx', brand: 'Ferrari', model: 'SF90 XX Stradale', gen: '2023',
+      specs: '1030 ch · 0-100 en 2,3 s · 320 km/h', stats: [.99, 1, .9],
+      vmax: 320, accel: .85, grip: 1.1,
+      glb: 'models/sf90.glb', glbFlip: true, paint: /Paint_Material/,
+      credit: 'Modèle 3D « 2023 Ferrari SF90 XX Stradale » par Ddiaz Design (Sketchfab), licence CC BY 4.0',
+      L: 4.85, W: 2.01, r: .36, xr: 1.0, xf: 3.65, tw: .34, rim: 0x2a2c30, badge: 'ferrari', cw: .66,
+      colors: [[0xd40000, 'Rosso Corsa'], [0xf6c700, 'Giallo Modena'], [0x1b2a55, 'Blu Pozzi'], [0x6e7278, 'Grigio Titanio']],
+      body: [[.05, .2], [0, .35], [0, .72], [.08, .84], [.4, .87], [1.05, .83], [3.2, .78], [3.5, .67], [4.1, .56], [4.55, .45], [4.70, .32], [4.62, .16], [.2, .14]],
+      cabin: [[1.02, .82], [1.72, 1.12], [2.42, 1.13], [3.22, .76]],
+      tl: [.03, .74], tlW: .3, hl: [4.45, .48], plate: [0, .46], plateF: [4.7, .28],
+      extras(g, { L, W, Z }) {
+        box(g, MAT.carbon, W * .88, .07, .2, 0, .88, Z(.14));                        // aileron
+        box(g, MAT.carbon, W * .84, .2, .45, 0, .22, Z(.15), false);                 // diffuseur
+        for (const s of [-1, 1]) box(g, MAT.black, .04, .24, .7, s * (W / 2 + .005), .5, Z(1.6), false); // prises d'air
         for (const x of [-.12, .12]) mesh(g, CYLZ, MAT.chrome, .06, .06, .14, x, .6, Z(-.03));
       },
     },
@@ -500,11 +516,13 @@
     def.status = text;
     if (player.def === def) $('modelStatus').textContent = text;
   }
-  function loadModels() {
-    for (const def of PLAYER_CARS.filter(d => d.glb)) {
-      if (!THREE.GLTFLoader) { setModelStatus(def, 'Modèle 3D indisponible : chargeur absent'); continue; }
+  function loadModel(def) {
+    if (!def.glb || def.model3d || def.loading) return;
+    def.loading = true;
+    {
+      if (!THREE.GLTFLoader) { setModelStatus(def, 'Modèle 3D indisponible : chargeur absent'); return; }
       setModelStatus(def, 'Chargement du modèle 3D…');
-      const fail = why => setModelStatus(def, 'Modèle 3D non chargé : ' + why);
+      const fail = why => { def.loading = false; setModelStatus(def, 'Modèle 3D non chargé : ' + why); };
       const sc = document.createElement('script');
       sc.src = def.glb + '.js';
       sc.onerror = () => fail('fichier introuvable');
@@ -573,6 +591,7 @@
     if (player.mesh) scene.remove(player.mesh);
     const def = PLAYER_CARS[carIdx];
     player.def = def;
+    loadModel(def);
     player.mesh = makeCar(def, def.colors[colorIdx[carIdx]][0]);
     player.mesh.position.x = player.x;
     scene.add(player.mesh);
@@ -605,11 +624,11 @@
   function switchCar(d) {
     carIdx = (carIdx + d + PLAYER_CARS.length) % PLAYER_CARS.length;
     lsSet('rr_car', PLAYER_CARS[carIdx].id);
-    setPlayerCar(); renderGarage(); loadModels();
+    setPlayerCar(); renderGarage();
   }
   $('prev').onclick = () => switchCar(-1);
   $('next').onclick = () => switchCar(1);
-  setPlayerCar(); renderGarage(); loadModels();
+  setPlayerCar(); renderGarage();
 
   const cam = { pos: new THREE.Vector3(6, 4, 8), look: new THREE.Vector3(0, 0, 0) };
 
